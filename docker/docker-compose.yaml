@@ -1,0 +1,20 @@
+version: '1'
+
+services:
+  minigpt4:
+    build: .
+    image: minigpt4
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+    volumes:
+      - /mnt/g/LLMs/Vision-CAIR/vicuna-7b:/llm_weights/vicuna
+      - ./app:/MiniGPT-4/app
+      - ../data:/MiniGPT-4/data
+    tty: true
+    environment:
+      - EVAL_CONFIG=eval_configs/minigpt4_vicuna_7b_eval.yaml
+    ports:
+      - 30485:7860
